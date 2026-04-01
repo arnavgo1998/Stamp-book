@@ -82,6 +82,7 @@ export default function LetterEnvelope({ stamp }: LetterEnvelopeProps) {
           alt={stamp.name}
           className="letter-stamp-img"
           draggable={false}
+          loading="lazy"
           style={{
             transform: isInverted ? 'rotate(180deg)' : undefined,
             clipPath: STAMP_CLIPS[stamp.id],

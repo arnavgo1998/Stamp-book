@@ -83,6 +83,7 @@ export default function StampHero({ stamp, index, era }: StampHeroProps) {
                     alt={`${stamp.name} — ${stamp.country}, ${stamp.year}`}
                     className="stamp-art-image"
                     draggable={false}
+                    loading={index === 0 ? 'eager' : 'lazy'}
                   />
                 ) : (
                   <div className="w-full h-full" style={{ background: stamp.colors.background }} />

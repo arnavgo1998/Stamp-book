@@ -7,15 +7,27 @@ interface NavigationProps {
   activeEra?: EraAtmosphere
 }
 
+/** Check if era background is dark */
+function isDarkEra(bg?: string): boolean {
+  if (!bg) return false
+  const hex = bg.replace('#', '')
+  if (hex.length < 6) return false
+  const r = parseInt(hex.slice(0, 2), 16)
+  const g = parseInt(hex.slice(2, 4), 16)
+  const b = parseInt(hex.slice(4, 6), 16)
+  return (r * 299 + g * 587 + b * 114) / 1000 < 100
+}
+
 export default function Navigation({ stamps, currentIndex, onNavigate, activeEra }: NavigationProps) {
   const accent = activeEra?.accent ?? '#b44233'
-  const metaColor = activeEra?.ink.meta ?? '#b5afa6'
+  const dark = isDarkEra(activeEra?.background)
+  const metaColor = dark ? '#e0d5c5' : (activeEra?.ink.meta ?? '#b5afa6')
 
   return (
     <>
       {/* Desktop: vertical timeline rail on the right */}
       <nav className="timeline-rail" aria-label="Stamp timeline">
-        <div className="timeline-line" style={{ background: `${metaColor}30`, transition: 'background 0.6s ease' }} />
+        <div className="timeline-line" style={{ background: `${metaColor}${dark ? '50' : '30'}`, transition: 'background 0.6s ease' }} />
         {stamps.map((stamp, i) => {
           const isActive = i === currentIndex
           return (
@@ -31,7 +43,7 @@ export default function Navigation({ stamps, currentIndex, onNavigate, activeEra
               <span
                 className="timeline-dot"
                 style={{
-                  background: isActive ? accent : `${metaColor}60`,
+                  background: isActive ? accent : `${metaColor}${dark ? '90' : '60'}`,
                   transform: isActive ? 'scale(1.4)' : 'scale(1)',
                   boxShadow: isActive ? `0 0 6px ${accent}40` : 'none',
                   transition: 'all 0.3s ease',
@@ -40,8 +52,8 @@ export default function Navigation({ stamps, currentIndex, onNavigate, activeEra
               <span
                 className="timeline-year"
                 style={{
-                  color: isActive ? accent : `${metaColor}90`,
-                  opacity: isActive ? 1 : 0.5,
+                  color: isActive ? accent : metaColor,
+                  opacity: isActive ? 1 : (dark ? 0.6 : 0.4),
                   transition: 'all 0.3s ease',
                 }}
               >
