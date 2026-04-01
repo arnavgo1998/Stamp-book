@@ -182,14 +182,16 @@ export default function StampHero({ stamp, index, era }: StampHeroProps) {
           {stamp.name}
         </h1>
 
-        {/* Denomination + value */}
-        <div
-          className="font-mono lowercase"
-          style={{ fontSize: '12px', letterSpacing: '0.1em', color: metaColor, opacity: 0.7, marginTop: '0.5rem', transition: 'color 0.6s ease' }}
-        >
-          {stamp.denomination.toLowerCase()}
-          <span style={{ margin: '0 0.5em', opacity: 0.4 }}>·</span>
-          est. {stamp.estimatedValue}
+        {/* Original price + current value */}
+        <div style={{ marginTop: '0.75rem', display: 'flex', gap: '1.5rem', transition: 'color 0.6s ease' }}>
+          <div>
+            <div className="font-mono uppercase" style={{ fontSize: '9px', letterSpacing: '0.14em', color: metaColor, opacity: 0.5 }}>Original</div>
+            <div className="font-mono" style={{ fontSize: '12px', letterSpacing: '0.05em', color: titleColor, opacity: 0.7, marginTop: '2px' }}>{stamp.denomination}</div>
+          </div>
+          <div>
+            <div className="font-mono uppercase" style={{ fontSize: '9px', letterSpacing: '0.14em', color: metaColor, opacity: 0.5 }}>Value Today</div>
+            <div className="font-mono" style={{ fontSize: '12px', letterSpacing: '0.05em', color: titleColor, opacity: 0.7, marginTop: '2px' }}>{stamp.estimatedValue}</div>
+          </div>
         </div>
 
         {/* Significance — the hook */}

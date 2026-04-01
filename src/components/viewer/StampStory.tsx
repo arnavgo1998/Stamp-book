@@ -75,16 +75,26 @@ export default function StampStory({ stamp, index, total, era }: StampStoryProps
         ))}
       </div>
 
-      {/* Endnote: value + fun fact */}
+      {/* Endnote: original + value today + fun fact */}
       <ScrollReveal delay={0.1}>
         <div className="story-endnote" style={{ borderColor: `${metaColor}30`, transition: 'border-color 0.6s ease' }}>
           <div className="story-endnote-row">
-            <span className="font-mono uppercase" style={{ fontSize: '12px', letterSpacing: '0.1em', color: metaColor, transition: 'color 0.6s ease' }}>
-              Est. Value
-            </span>
-            <span className="font-mono" style={{ fontSize: '12px', letterSpacing: '0.08em', color: titleColor, opacity: 0.7, transition: 'color 0.6s ease' }}>
-              {stamp.estimatedValue}
-            </span>
+            <div>
+              <span className="font-mono uppercase" style={{ fontSize: '9px', letterSpacing: '0.12em', color: metaColor, opacity: 0.6, transition: 'color 0.6s ease' }}>
+                Original
+              </span>
+              <div className="font-mono" style={{ fontSize: '12px', letterSpacing: '0.05em', color: titleColor, opacity: 0.7, marginTop: '2px', transition: 'color 0.6s ease' }}>
+                {stamp.denomination}
+              </div>
+            </div>
+            <div style={{ textAlign: 'right' }}>
+              <span className="font-mono uppercase" style={{ fontSize: '9px', letterSpacing: '0.12em', color: metaColor, opacity: 0.6, transition: 'color 0.6s ease' }}>
+                Value Today
+              </span>
+              <div className="font-mono" style={{ fontSize: '12px', letterSpacing: '0.05em', color: titleColor, opacity: 0.7, marginTop: '2px', transition: 'color 0.6s ease' }}>
+                {stamp.estimatedValue}
+              </div>
+            </div>
           </div>
           {stamp.funFact && (
             <p className="font-body italic" style={{ fontSize: '13px', lineHeight: 1.6, color: metaColor, marginTop: '0.75rem', transition: 'color 0.6s ease' }}>
