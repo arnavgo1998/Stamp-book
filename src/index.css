@@ -1,0 +1,718 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f4f1eb;
+  --color-paper-shadow: #ebe7de;
+  --color-paper-bright: #faf8f4;
+  --color-graphite: #2c2c2c;
+  --color-graphite-mid: #6b6560;
+  --color-graphite-ghost: #b5afa6;
+  --color-graphite-trace: #d4cfc8;
+  --color-ink: #1a1816;
+  --color-ink-wash: #3d3835;
+  --color-postal-red: #b44233;
+  --color-gum-amber: #c8a46c;
+  --font-display: "Instrument Serif", Georgia, serif;
+  --font-body: "Source Serif 4", Georgia, serif;
+  --font-mono: "DM Mono", "SF Mono", monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  font-size: 15px;
+  line-height: 1.733;
+}
+
+#root {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+::selection {
+  background: rgba(180, 66, 51, 0.15);
+  color: var(--color-ink);
+}
+
+
+/* -------------------------------------------------------
+   Scroll container — free scroll (no snap)
+   ------------------------------------------------------- */
+
+.stamp-scroll-container {
+  width: 100%;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  position: relative;
+  z-index: 10;
+}
+
+
+/* -------------------------------------------------------
+   Section wrapper — two acts per stamp
+   ------------------------------------------------------- */
+
+.stamp-section-wrapper {
+  position: relative;
+  min-height: 100vh;
+}
+
+
+/* -------------------------------------------------------
+   Act 1: The Encounter — full viewport hero
+   ------------------------------------------------------- */
+
+.stamp-hero-area {
+  height: 100vh;
+  position: relative;
+}
+
+.hero-layout {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5%;
+  padding-bottom: 6vh;
+  position: relative;
+}
+
+.hero-stamp {
+  position: relative;
+  flex-shrink: 0;
+  width: min(55vw, 280px);
+  aspect-ratio: 3 / 4;
+}
+
+.hero-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.hero-title {
+  text-align: center;
+  font-size: clamp(2.5rem, 9vw, 7rem);
+}
+
+/* Desktop: side by side */
+@media (min-width: 768px) {
+  .hero-layout {
+    flex-direction: row;
+    padding: 0 8%;
+    padding-bottom: 0;
+  }
+
+  .hero-stamp {
+    width: min(40vw, 320px);
+  }
+
+  .hero-meta {
+    flex: 1;
+    padding-left: 6%;
+    align-items: flex-start;
+    margin-top: 0;
+  }
+
+  .hero-title {
+    text-align: left;
+  }
+}
+
+/* Ghosted year */
+.ghosted-year {
+  position: absolute;
+  font-family: var(--font-display);
+  font-size: clamp(15vw, 22vw, 30vw);
+  pointer-events: none;
+  user-select: none;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  z-index: 0;
+  white-space: nowrap;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -55%);
+}
+
+/* Gentle bounce for scroll hint */
+@keyframes gentle-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+
+/* -------------------------------------------------------
+   Story layout — two-column: sticky stamp left, story right
+   ------------------------------------------------------- */
+
+.stamp-story-layout {
+  display: flex;
+  flex-direction: column;
+  padding: 0 5% 6rem;
+}
+
+@media (min-width: 768px) {
+  .stamp-story-layout {
+    flex-direction: row;
+    padding: 0 4% 8rem;
+    gap: 4%;
+  }
+}
+
+/* Left column: stamp sidebar */
+.story-stamp-col {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .story-stamp-col {
+    display: block;
+    width: 28%;
+    flex-shrink: 0;
+  }
+}
+
+.story-stamp-sticky {
+  position: sticky;
+  top: 15vh;
+}
+
+/* Side stamp thumbnail */
+.side-stamp-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.side-stamp-frame {
+  position: relative;
+  width: 100%;
+  max-width: 240px;
+  background: rgba(28, 24, 20, 0.75);
+  padding: 6%;
+  border-radius: 2px;
+  box-shadow:
+    0 1px 0 0 rgba(200, 190, 175, 0.2),
+    3px 5px 12px rgba(20, 16, 12, 0.2),
+    6px 12px 28px rgba(20, 16, 12, 0.12);
+  transform: rotate(-0.5deg);
+  overflow: hidden;
+}
+
+/* No dark mount for non-rectangle stamps — let the stamp shape speak */
+.side-stamp-no-mount {
+  background: transparent;
+  box-shadow:
+    3px 5px 12px rgba(20, 16, 12, 0.15),
+    6px 12px 28px rgba(20, 16, 12, 0.08);
+  padding: 2%;
+}
+
+.side-stamp-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.side-stamp-caption {
+  margin-top: 0.75rem;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+
+/* Right column: story text */
+.story-text-col {
+  flex: 1;
+  min-width: 0;
+}
+
+/* -------------------------------------------------------
+   Act 2: The Story — editorial content
+   ------------------------------------------------------- */
+
+.story-section {
+  position: relative;
+  z-index: 10;
+  padding: 2rem 0 2rem;
+  max-width: 56ch;
+}
+
+.story-rule {
+  width: 60px;
+  height: 2px;
+  margin-bottom: 2rem;
+}
+
+.story-text {
+  font-size: 15px;
+  line-height: 1.733;
+  text-align: justify;
+  hyphens: auto;
+  margin-bottom: 1.2rem;
+}
+
+.story-drop-cap {
+  float: left;
+  font-size: 3.2em;
+  line-height: 0.82;
+  padding-top: 0.06em;
+  margin-right: 0.3rem;
+  font-weight: 400;
+}
+
+.story-endnote {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid;
+}
+
+.story-endnote-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.story-footer {
+  margin-top: 3rem;
+  text-align: center;
+  opacity: 0.4;
+}
+
+
+/* -------------------------------------------------------
+   Stamp mount + perforation + art
+   ------------------------------------------------------- */
+
+.stamp-mount {
+  position: absolute;
+  inset: 0;
+  padding: 5%;
+  background: rgba(28, 24, 20, 0.8);
+  border-radius: 2px;
+  /* Strong shadow — the mount has real depth, lifted off the album page */
+  box-shadow:
+    0 1px 0 0 rgba(200, 190, 175, 0.25),
+    0 2px 0 0 rgba(180, 170, 155, 0.15),
+    3px 5px 12px rgba(20, 16, 12, 0.25),
+    6px 12px 30px rgba(20, 16, 12, 0.15),
+    1px 2px 4px rgba(20, 16, 12, 0.2);
+  /* Subtle rotation — placed on desk, not machine-perfect */
+  transform: rotate(-0.5deg);
+}
+
+/* No dark background for non-rectangle stamps (triangle, octagon) */
+.stamp-mount-transparent {
+  background: transparent;
+  box-shadow:
+    3px 5px 12px rgba(20, 16, 12, 0.15),
+    6px 12px 28px rgba(20, 16, 12, 0.08);
+  padding: 2%;
+}
+
+.stamp-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /* Paper edge thickness — the stamp has physical depth within the mount */
+  box-shadow:
+    0 1px 0 0 rgba(220, 210, 195, 0.6),
+    0 2px 0 0 rgba(200, 190, 175, 0.4),
+    0 3px 1px rgba(20, 16, 12, 0.12);
+  border-radius: 1px;
+}
+
+.stamp-perforated {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.stamp-art-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.stamp-art-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.stamp-physical {
+  transform-style: preserve-3d;
+  perspective: 800px;
+}
+
+@keyframes shimmer {
+  0% { background-position: -150% 0; }
+  100% { background-position: 250% 0; }
+}
+
+.stamp-shimmer {
+  animation: shimmer 8s ease-in-out infinite;
+}
+
+.stamp-physical:hover {
+  filter: brightness(1.02);
+}
+
+
+/* -------------------------------------------------------
+   Timeline navigation
+   ------------------------------------------------------- */
+
+.timeline-rail {
+  position: fixed;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  display: none;
+  height: 60vh;
+}
+
+@media (min-width: 768px) {
+  .timeline-rail { display: block; }
+}
+
+.timeline-line {
+  position: absolute;
+  right: 3px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+}
+
+.timeline-marker {
+  position: absolute;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-direction: row-reverse;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.timeline-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.timeline-year {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.mobile-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.mobile-nav > * { pointer-events: auto; }
+
+@media (min-width: 768px) {
+  .mobile-nav { display: none; }
+}
+
+
+/* -------------------------------------------------------
+   Letter envelope — stamp on era-appropriate mail
+   ------------------------------------------------------- */
+
+.letter-envelope {
+  position: relative;
+  width: 100%;
+  max-width: 280px;
+  aspect-ratio: 4 / 3;
+  border-radius: 1px;
+  overflow: hidden;
+  transform: rotate(-1deg);
+  box-shadow:
+    0 1px 0 0 rgba(200, 190, 175, 0.2),
+    2px 4px 8px rgba(20, 16, 12, 0.12),
+    4px 8px 20px rgba(20, 16, 12, 0.08);
+}
+
+/* Fold lines — letter folded in thirds */
+.letter-folds {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background:
+    linear-gradient(to bottom,
+      transparent 32%, rgba(0,0,0,0.04) 32.5%, rgba(0,0,0,0.02) 33%, transparent 33.5%,
+      transparent 65%, rgba(0,0,0,0.04) 65.5%, rgba(0,0,0,0.02) 66%, transparent 66.5%
+    );
+}
+
+/* Edge aging */
+.letter-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(
+    ellipse 85% 80% at 50% 50%,
+    transparent 50%,
+    rgba(80, 60, 30, 0.08) 100%
+  );
+}
+
+/* Stamp on the letter — small, like a real stamp on real mail */
+.letter-stamp {
+  position: absolute;
+  top: 6%;
+  right: 6%;
+  width: 20%;
+  z-index: 5;
+}
+
+.letter-stamp-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: saturate(0.95) contrast(1.02);
+  box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+  /* White becomes transparent against the paper — fixes non-rect stamp backgrounds */
+  mix-blend-mode: multiply;
+}
+
+/* Cancellation mark */
+.letter-cancellation {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  width: 28%;
+  aspect-ratio: 1;
+  z-index: 6;
+  pointer-events: none;
+}
+
+/* Address — fictional era-appropriate text centered on the envelope */
+.letter-address {
+  position: absolute;
+  top: 42%;
+  left: 10%;
+  right: 30%;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.letter-address-line {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Script handwriting — italic serif suggests copperplate penmanship */
+.letter-script {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 9px;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+}
+
+/* Typed — monospace, mechanical */
+.letter-typed {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  line-height: 1.8;
+  letter-spacing: 0.06em;
+}
+
+/* Printed — mono uppercase, newspaper masthead */
+.letter-printed {
+  font-family: var(--font-mono);
+  font-size: 7px;
+  line-height: 1.8;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Chinese — larger characters, vertical-ish feel */
+.letter-chinese {
+  font-size: 10px;
+  line-height: 1.8;
+  letter-spacing: 0.3em;
+}
+
+/* Sender — small return address, top-left */
+.letter-sender {
+  position: absolute;
+  top: 8%;
+  left: 8%;
+  z-index: 1;
+}
+
+/* Airmail border for Inverted Jenny */
+.letter-airmail-border {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  border: 4px solid transparent;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      #c0392b 0px, #c0392b 5px,
+      transparent 5px, transparent 8px,
+      #1a3a6e 8px, #1a3a6e 13px,
+      transparent 13px, transparent 16px
+    );
+  background-clip: padding-box;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 4px;
+  opacity: 0.4;
+}
+
+
+/* -------------------------------------------------------
+   Era artwork — atmospheric pattern from the right
+   ------------------------------------------------------- */
+
+.era-artwork {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 45%;
+  pointer-events: none;
+  z-index: 0;
+  mask-image: linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 40%, transparent 70%);
+  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0.4) 40%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.era-artwork-visible {
+  opacity: 1;
+}
+
+@media (max-width: 767px) {
+  .era-artwork {
+    width: 30%;
+    mask-image: linear-gradient(to left, rgba(0,0,0,0.3) 0%, transparent 50%);
+    -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.3) 0%, transparent 50%);
+  }
+}
+
+
+/* -------------------------------------------------------
+   Global chrome
+   ------------------------------------------------------- */
+
+/* -------------------------------------------------------
+   Colophon — book-end credit
+   ------------------------------------------------------- */
+
+.colophon {
+  text-align: center;
+  padding: 6rem 2rem 4rem;
+  max-width: 32ch;
+  margin: 0 auto;
+}
+
+.colophon-rule {
+  width: 40px;
+  height: 1px;
+  background: var(--color-graphite-ghost);
+  margin: 0 auto 2rem;
+}
+
+.colophon-title {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  letter-spacing: -0.02em;
+  color: var(--color-graphite);
+  opacity: 0.5;
+  margin-bottom: 1rem;
+}
+
+.colophon-text {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--color-graphite-mid);
+  font-style: italic;
+}
+
+.colophon-link {
+  color: var(--color-ink-wash);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-graphite-trace);
+  transition: border-color 0.2s ease;
+}
+
+.colophon-link:hover {
+  border-color: var(--color-postal-red);
+  color: var(--color-postal-red);
+}
+
+.colophon-sub {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--color-graphite-ghost);
+  margin-top: 1.5rem;
+}
+
+
+/* -------------------------------------------------------
+   Global chrome
+   ------------------------------------------------------- */
+
+::-webkit-scrollbar { display: none; }
+.stamp-scroll-container { scrollbar-width: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

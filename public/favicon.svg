@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="2" fill="#3c2415"/>
+  <g>
+    <rect x="4" y="4" width="24" height="24" rx="1" fill="#f5f0e8"/>
+    <rect x="6" y="6" width="20" height="20" fill="none" stroke="#3c2415" stroke-width="0.5"/>
+    <text x="16" y="20" text-anchor="middle" font-family="serif" font-size="14" font-weight="600" fill="#3c2415">S</text>
+  </g>
+  <!-- perforations -->
+  <circle cx="8" cy="3" r="1.2" fill="#1a1410"/><circle cx="13" cy="3" r="1.2" fill="#1a1410"/>
+  <circle cx="18" cy="3" r="1.2" fill="#1a1410"/><circle cx="23" cy="3" r="1.2" fill="#1a1410"/>
+  <circle cx="8" cy="29" r="1.2" fill="#1a1410"/><circle cx="13" cy="29" r="1.2" fill="#1a1410"/>
+  <circle cx="18" cy="29" r="1.2" fill="#1a1410"/><circle cx="23" cy="29" r="1.2" fill="#1a1410"/>
+  <circle cx="3" cy="8" r="1.2" fill="#1a1410"/><circle cx="3" cy="13" r="1.2" fill="#1a1410"/>
+  <circle cx="3" cy="18" r="1.2" fill="#1a1410"/><circle cx="3" cy="23" r="1.2" fill="#1a1410"/>
+  <circle cx="29" cy="8" r="1.2" fill="#1a1410"/><circle cx="29" cy="13" r="1.2" fill="#1a1410"/>
+  <circle cx="29" cy="18" r="1.2" fill="#1a1410"/><circle cx="29" cy="23" r="1.2" fill="#1a1410"/>
+</svg>

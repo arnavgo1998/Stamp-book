@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 2350px;
+    height: 1000px;
+    background: #f4f1eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Paper grain */
+  body::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    opacity: 0.045;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  /* Construction lines */
+  .construction {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Ghosted year */
+  .ghost-year {
+    position: absolute;
+    font-family: 'Instrument Serif', serif;
+    font-size: 380px;
+    color: #d4cfc8;
+    opacity: 0.06;
+    letter-spacing: -0.04em;
+    line-height: 0.85;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -52%);
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+
+  /* Layout */
+  .composition {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0 10%;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Stamp area */
+  .stamp-area {
+    flex-shrink: 0;
+    width: 260px;
+    margin-left: 8%;
+    position: relative;
+  }
+
+  .stamp-shadow {
+    filter: drop-shadow(2px 3px 6px rgba(42,36,28,0.08)) drop-shadow(1px 1px 2px rgba(42,36,28,0.05));
+  }
+
+  /* Text area */
+  .text-area {
+    margin-left: 8%;
+    margin-top: -1%;
+  }
+
+  .title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 88px;
+    color: #1a1816;
+    letter-spacing: -0.04em;
+    line-height: 0.92;
+    font-weight: 400;
+  }
+
+  .subtitle {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: #6b6560;
+    letter-spacing: 0.12em;
+    margin-top: 24px;
+    text-transform: lowercase;
+  }
+
+  .value {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #b5afa6;
+    letter-spacing: 0.1em;
+    margin-top: 10px;
+    text-transform: lowercase;
+  }
+
+  /* Postal red dot */
+  .dot {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #b44233;
+    box-shadow: 0 0 6px 2px rgba(180,66,51,0.15);
+    z-index: 20;
+  }
+
+  /* Thin line divider after subtitle */
+  .line {
+    width: 40px;
+    height: 1px;
+    background: #d4cfc8;
+    margin-top: 20px;
+  }
+
+  .hint {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: #b5afa6;
+    margin-top: 32px;
+  }
+  .hint span {
+    font-family: 'DM Mono', monospace;
+    font-style: normal;
+    font-size: 11px;
+    color: #d4cfc8;
+    margin-left: 4px;
+  }
+</style>
+</head>
+<body>
+  <!-- Ghosted year -->
+  <div class="ghost-year">1840</div>
+
+  <!-- Construction lines -->
+  <svg class="construction" width="100%" height="100%">
+    <line x1="0" y1="500" x2="2350" y2="500" stroke="#d4cfc8" stroke-width="0.5" opacity="0.3" stroke-dasharray="4 8" />
+    <line x1="780" y1="0" x2="780" y2="1000" stroke="#d4cfc8" stroke-width="0.5" opacity="0.25" stroke-dasharray="4 8" />
+  </svg>
+
+  <div class="composition">
+    <!-- Stamp line drawing -->
+    <div class="stamp-area">
+      <div class="stamp-shadow">
+        <svg viewBox="0 0 200 260" width="260" xmlns="http://www.w3.org/2000/svg">
+          <!-- Perforated border -->
+          <defs>
+            <clipPath id="perf">
+              <path d="M 0 0 H 200 V 260 H 0 Z M 11 0 A 3.5 3.5 0 1 0 18 0 M 22 0 A 3.5 3.5 0 1 0 29 0 M 33 0 A 3.5 3.5 0 1 0 40 0 M 44 0 A 3.5 3.5 0 1 0 51 0 M 55 0 A 3.5 3.5 0 1 0 62 0 M 66 0 A 3.5 3.5 0 1 0 73 0 M 77 0 A 3.5 3.5 0 1 0 84 0 M 88 0 A 3.5 3.5 0 1 0 95 0 M 99 0 A 3.5 3.5 0 1 0 106 0 M 110 0 A 3.5 3.5 0 1 0 117 0 M 121 0 A 3.5 3.5 0 1 0 128 0 M 132 0 A 3.5 3.5 0 1 0 139 0 M 143 0 A 3.5 3.5 0 1 0 150 0 M 154 0 A 3.5 3.5 0 1 0 161 0 M 165 0 A 3.5 3.5 0 1 0 172 0 M 176 0 A 3.5 3.5 0 1 0 183 0 M 187 0 A 3.5 3.5 0 1 0 194 0 M 11 260 A 3.5 3.5 0 1 0 18 260 M 22 260 A 3.5 3.5 0 1 0 29 260 M 33 260 A 3.5 3.5 0 1 0 40 260 M 44 260 A 3.5 3.5 0 1 0 51 260 M 55 260 A 3.5 3.5 0 1 0 62 260 M 66 260 A 3.5 3.5 0 1 0 73 260 M 77 260 A 3.5 3.5 0 1 0 84 260 M 88 260 A 3.5 3.5 0 1 0 95 260 M 99 260 A 3.5 3.5 0 1 0 106 260 M 110 260 A 3.5 3.5 0 1 0 117 260 M 121 260 A 3.5 3.5 0 1 0 128 260 M 132 260 A 3.5 3.5 0 1 0 139 260 M 143 260 A 3.5 3.5 0 1 0 150 260 M 154 260 A 3.5 3.5 0 1 0 161 260 M 165 260 A 3.5 3.5 0 1 0 172 260 M 176 260 A 3.5 3.5 0 1 0 183 260 M 187 260 A 3.5 3.5 0 1 0 194 260 M 0 11 A 3.5 3.5 0 1 0 0 18 M 0 22 A 3.5 3.5 0 1 0 0 29 M 0 33 A 3.5 3.5 0 1 0 0 40 M 0 44 A 3.5 3.5 0 1 0 0 51 M 0 55 A 3.5 3.5 0 1 0 0 62 M 0 66 A 3.5 3.5 0 1 0 0 73 M 0 77 A 3.5 3.5 0 1 0 0 84 M 0 88 A 3.5 3.5 0 1 0 0 95 M 0 99 A 3.5 3.5 0 1 0 0 106 M 0 110 A 3.5 3.5 0 1 0 0 117 M 0 121 A 3.5 3.5 0 1 0 0 128 M 0 132 A 3.5 3.5 0 1 0 0 139 M 0 143 A 3.5 3.5 0 1 0 0 150 M 0 154 A 3.5 3.5 0 1 0 0 161 M 0 165 A 3.5 3.5 0 1 0 0 172 M 0 176 A 3.5 3.5 0 1 0 0 183 M 0 187 A 3.5 3.5 0 1 0 0 194 M 0 198 A 3.5 3.5 0 1 0 0 205 M 0 209 A 3.5 3.5 0 1 0 0 216 M 0 220 A 3.5 3.5 0 1 0 0 227 M 0 231 A 3.5 3.5 0 1 0 0 238 M 0 242 A 3.5 3.5 0 1 0 0 249 M 200 11 A 3.5 3.5 0 1 0 200 18 M 200 22 A 3.5 3.5 0 1 0 200 29 M 200 33 A 3.5 3.5 0 1 0 200 40 M 200 44 A 3.5 3.5 0 1 0 200 51 M 200 55 A 3.5 3.5 0 1 0 200 62 M 200 66 A 3.5 3.5 0 1 0 200 73 M 200 77 A 3.5 3.5 0 1 0 200 84 M 200 88 A 3.5 3.5 0 1 0 200 95 M 200 99 A 3.5 3.5 0 1 0 200 106 M 200 110 A 3.5 3.5 0 1 0 200 117 M 200 121 A 3.5 3.5 0 1 0 200 128 M 200 132 A 3.5 3.5 0 1 0 200 139 M 200 143 A 3.5 3.5 0 1 0 200 150 M 200 154 A 3.5 3.5 0 1 0 200 161 M 200 165 A 3.5 3.5 0 1 0 200 172 M 200 176 A 3.5 3.5 0 1 0 200 183 M 200 187 A 3.5 3.5 0 1 0 200 194 M 200 198 A 3.5 3.5 0 1 0 200 205 M 200 209 A 3.5 3.5 0 1 0 200 216 M 200 220 A 3.5 3.5 0 1 0 200 227 M 200 231 A 3.5 3.5 0 1 0 200 238 M 200 242 A 3.5 3.5 0 1 0 200 249" fill-rule="evenodd" />
+            </clipPath>
+          </defs>
+
+          <g clip-path="url(#perf)">
+            <!-- Stamp background -->
+            <rect width="200" height="260" fill="#2d2d2d" />
+
+            <!-- Ornate border lines -->
+            <rect x="10" y="10" width="180" height="240" fill="none" stroke="#4a4a4a" stroke-width="1.5" />
+            <rect x="14" y="14" width="172" height="232" fill="none" stroke="#3d3d3d" stroke-width="0.6" />
+
+            <!-- Engine-turned background suggestion -->
+            <ellipse cx="100" cy="130" rx="50" ry="62" fill="none" stroke="#3a3a3a" stroke-width="0.5" />
+            <ellipse cx="100" cy="130" rx="40" ry="50" fill="none" stroke="#3a3a3a" stroke-width="0.4" />
+            <ellipse cx="100" cy="130" rx="30" ry="38" fill="none" stroke="#3a3a3a" stroke-width="0.3" />
+
+            <!-- Victoria profile — simplified silhouette -->
+            <path d="M92 180 C85 170 82 155 84 145 C85 138 88 132 90 128 C91 124 90 118 88 112 C86 106 84 100 86 94 C87 90 90 86 92 83 C93 80 94 76 96 72 C98 68 100 66 103 65 C106 64 109 65 111 68 C112 70 111 74 109 78 C107 82 105 86 105 90 C105 94 107 98 109 102 C111 106 113 110 113 116 C113 120 111 124 110 128 C109 132 110 136 112 140 C114 146 118 154 118 162 C118 168 116 174 112 180 Z" fill="#3d3d3d" />
+
+            <!-- Crown suggestion -->
+            <path d="M94 72 L96 64 L99 70 L102 62 L105 70 L108 65 L110 72" fill="none" stroke="#4a4a4a" stroke-width="0.6" />
+
+            <!-- POSTAGE text -->
+            <text x="100" y="38" text-anchor="middle" fill="#5a5a5a" font-family="serif" font-size="10" letter-spacing="3">POSTAGE</text>
+
+            <!-- ONE PENNY text -->
+            <text x="100" y="228" text-anchor="middle" fill="#5a5a5a" font-family="serif" font-size="9" letter-spacing="2.5">ONE PENNY</text>
+
+            <!-- Corner letters -->
+            <text x="30" y="242" text-anchor="middle" fill="#5a5a5a" font-family="serif" font-size="8">A</text>
+            <text x="170" y="242" text-anchor="middle" fill="#5a5a5a" font-family="serif" font-size="8">B</text>
+
+            <!-- Stars in corners -->
+            <path d="M30 35 L31.5 32 L33 35 L30 33 L33 33 Z" fill="#5a5a5a" />
+            <path d="M167 35 L168.5 32 L170 35 L167 33 L170 33 Z" fill="#5a5a5a" />
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Text -->
+    <div class="text-area">
+      <div class="title">the stamp book</div>
+      <div class="subtitle">ten stamps, ten stories</div>
+      <div class="line"></div>
+      <div class="hint">the story <span>→</span></div>
+    </div>
+  </div>
+
+  <!-- Postal red dot -->
+  <div class="dot"></div>
+</body>
+</html>
