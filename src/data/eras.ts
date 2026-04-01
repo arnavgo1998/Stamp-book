@@ -7,12 +7,12 @@ import type { EraAtmosphere } from './types'
  */
 
 export const ERA_ATMOSPHERES: Record<string, EraAtmosphere> = {
-  /* ─── 1840 UK ─── Victorian gaslight on copper plate ─── */
+  /* ─── 1840 UK ─── Victorian parchment, copper-plate warmth ─── */
   'penny-black': {
-    background: '#1e1c1a',
-    grain: { baseFrequency: 0.55, numOctaves: 5, opacity: 0.08, blendMode: 'overlay' },
-    light: { x: '25%', y: '15%', color: 'rgba(200,170,120,0.35)', spread: '50%', opacity: 0.6 },
-    ink: { title: '#f2ece0', meta: '#b8a898', ghost: '#3d3830', ghostOpacity: 0.12 },
+    background: '#f0ece4',
+    grain: { baseFrequency: 0.55, numOctaves: 5, opacity: 0.05, blendMode: 'multiply' },
+    light: { x: '25%', y: '15%', color: 'rgba(200,170,120,0.25)', spread: '50%', opacity: 0.4 },
+    ink: { title: '#2a2520', meta: '#6b6058', ghost: '#d4cfc8', ghostOpacity: 0.07 },
     accent: '#c8a46c',
   },
 
@@ -88,12 +88,12 @@ export const ERA_ATMOSPHERES: Record<string, EraAtmosphere> = {
     accent: '#c0392b',
   },
 
-  /* ─── 1968 China ─── Cultural Revolution, flat propaganda light ─── */
+  /* ─── 1968 China ─── Cultural Revolution, warm propaganda cream ─── */
   'whole-country-red': {
-    background: '#2a0c0c',
-    grain: { baseFrequency: 0.65, numOctaves: 3, opacity: 0.06, blendMode: 'overlay' },
-    light: { x: '50%', y: '50%', color: 'rgba(180,50,40,0.15)', spread: '90%', opacity: 0.3 },
-    ink: { title: '#f5efe2', meta: '#d0b8a0', ghost: '#4a1a15', ghostOpacity: 0.15 },
-    accent: '#f5c518',
+    background: '#f5ede5',
+    grain: { baseFrequency: 0.65, numOctaves: 3, opacity: 0.04, blendMode: 'multiply' },
+    light: { x: '50%', y: '50%', color: 'rgba(220,180,160,0.2)', spread: '90%', opacity: 0.3 },
+    ink: { title: '#2a1818', meta: '#7a5a50', ghost: '#d8c8c0', ghostOpacity: 0.08 },
+    accent: '#c0392b',
   },
 }
